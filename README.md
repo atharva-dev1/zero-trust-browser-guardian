@@ -12,7 +12,20 @@
 
 **Built by Atharva Sharma & Ashwin Jauhary · Team Nexora**
 
-[Features](#-features) · [Installation](#-installation) · [Architecture](#-architecture) · [Tech Stack](#-tech-stack) · [Testing](#-testing) · [Contributing](#-contributing)
+[Demo](#-demo) · [Features](#-features) · [Installation](#-installation) · [Architecture](#-architecture) · [Tech Stack](#-tech-stack) · [Testing](#-testing) · [Contributing](#-contributing)
+
+</div>
+
+---
+
+## 🎬 Demo
+
+<div align="center">
+
+<!-- After recording, save your GIF as assets/demo.gif and this will auto-render -->
+![ZTBG Demo](assets/demo.gif)
+
+ *ZTBG detecting a phishing page in real-time and intercepting a sensitive paste event*
 
 </div>
 
@@ -278,7 +291,7 @@ all copies or substantial portions of the Software.
 
 ## 👥 Authors
 
-**Atharva Sharma** & **Ashwin Jauhary**  
+**Atharva Sharma** & **Ashwin Jauhary**
 Team Nexora · HackTrack Round 1
 
 ---
