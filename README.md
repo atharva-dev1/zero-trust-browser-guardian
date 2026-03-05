@@ -276,7 +276,7 @@ git push origin feature/your-feature-name
 ```
 MIT License
 
-Copyright (c) 2025 Atharva Sharma & Ashwin Jauhary (Team Nexora)
+Copyright (c) 2026 Atharva Sharma & Ashwin Jauhary (Team Nexora)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software to deal in the Software without restriction, including the
@@ -292,7 +292,7 @@ all copies or substantial portions of the Software.
 ## 👥 Authors
 
 **Atharva Sharma** & **Ashwin Jauhary**
-Team Nexora · HackTrack Round 1
+Team **Nexora** · **HackTrack Hackathon**
 
 ---
 
