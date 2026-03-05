@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zero-Trust Browser Guardian</title>
+    <link rel="stylesheet" href="styles/popup.css" />
+</head>
+
+<body>
+    <!-- ── Header ────────────────────────────────────────────── -->
+    <header class="header">
+        <div class="header-brand">
+            <div class="shield-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 2L4 6v6c0 5.55 3.84 10.74 8 12 4.16-1.26 8-6.45 8-12V6L12 2z"
+                        fill="url(#shieldGrad)" />
+                    <path d="M9 12.5l2 2 4-4" stroke="#0d1117" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <defs>
+                        <linearGradient id="shieldGrad" x1="4" y1="2" x2="20" y2="24" gradientUnits="userSpaceOnUse">
+                            <stop offset="0%" stop-color="#00d4ff" />
+                            <stop offset="100%" stop-color="#0088aa" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+            </div>
+            <div class="brand-text">
+                <span class="brand-name">ZTBG</span>
+                <span class="brand-full">Zero-Trust Guardian</span>
+            </div>
+        </div>
+        <div class="header-controls">
+            <div class="toggle-wrapper" title="Enable/Disable for this domain">
+                <span class="toggle-label" id="toggle-label">ON</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="main-toggle" checked />
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+        </div>
+    </header>
+
+    <!-- ── Domain Info ───────────────────────────────────────── -->
+    <div class="domain-bar">
+        <div class="domain-indicator" id="domain-indicator">
+            <span class="domain-dot" id="domain-dot"></span>
+            <span class="domain-text" id="current-domain">Loading...</span>
+        </div>
+        <span class="scan-time" id="scan-time">Scanning...</span>
+    </div>
+
+    <!-- ── Main Risk Gauge ────────────────────────────────────── -->
+    <section class="gauge-section">
+        <div class="gauge-container">
+            <svg class="gauge-svg" viewBox="0 0 200 120" width="200" height="120">
+                <!-- Track arc -->
+                <path class="gauge-track" d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="#1e2a3a"
+                    stroke-width="14" stroke-linecap="round" />
+                <!-- Value arc — dynamically updated -->
+                <path class="gauge-arc" id="gauge-arc" d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="#00d4ff"
+                    stroke-width="14" stroke-linecap="round" stroke-dasharray="251.2" stroke-dashoffset="251.2" />
+                <!-- Center score -->
+                <text x="100" y="95" text-anchor="middle" class="gauge-score-text" id="gauge-score">0</text>
+                <text x="100" y="112" text-anchor="middle" class="gauge-level-text" id="gauge-level">Scanning</text>
+            </svg>
+        </div>
+
+        <!-- Sub-scores ────────────────────────────────────────── -->
+        <div class="sub-scores">
+            <div class="sub-score-card" id="sub-phishing">
+                <div class="sub-score-icon">🎣</div>
+                <div class="sub-score-info">
+                    <span class="sub-score-label">Phishing Risk</span>
+                    <div class="sub-score-bar-track">
+                        <div class="sub-score-bar" id="bar-phishing" style="width:0%"></div>
+                    </div>
+                </div>
+                <span class="sub-score-value" id="val-phishing">—</span>
+            </div>
+            <div class="sub-score-card" id="sub-dataleak">
+                <div class="sub-score-icon">🔐</div>
+                <div class="sub-score-info">
+                    <span class="sub-score-label">Data Leak Risk</span>
+                    <div class="sub-score-bar-track">
+                        <div class="sub-score-bar" id="bar-dataleak" style="width:0%"></div>
+                    </div>
+                </div>
+                <span class="sub-score-value" id="val-dataleak">—</span>
+            </div>
+            <div class="sub-score-card" id="sub-obfuscation">
+                <div class="sub-score-icon">⚙️</div>
+                <div class="sub-score-info">
+                    <span class="sub-score-label">Script Obfuscation</span>
+                    <div class="sub-score-bar-track">
+                        <div class="sub-score-bar" id="bar-obfuscation" style="width:0%"></div>
+                    </div>
+                </div>
+                <span class="sub-score-value" id="val-obfuscation">—</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── Active Threats ────────────────────────────────────── -->
+    <section class="threats-section">
+        <div class="section-header">
+            <span class="section-title">Active Threats</span>
+            <span class="threat-count" id="threat-count">0</span>
+        </div>
+        <div class="threats-list" id="threats-list">
+            <div class="no-threats">
+                <span class="no-threats-icon">✅</span>
+                <span>No threats detected</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── Stats Bar ─────────────────────────────────────────── -->
+    <section class="stats-bar">
+        <div class="stat-item">
+            <span class="stat-value" id="stat-blocked">0</span>
+            <span class="stat-label">Blocked</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+            <span class="stat-value" id="stat-scans">0</span>
+            <span class="stat-label">Scans</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+            <span class="stat-value" id="stat-score-display">—</span>
+            <span class="stat-label">Risk Score</span>
+        </div>
+    </section>
+
+    <!-- ── Domain Actions ────────────────────────────────────── -->
+    <section class="domain-actions">
+        <button class="action-btn action-btn--allow" id="btn-allow-domain" title="Trust this domain">
+            <span>✅</span> Trust Domain
+        </button>
+        <button class="action-btn action-btn--block" id="btn-block-domain" title="Block this domain">
+            <span>🚫</span> Block Domain
+        </button>
+        <button class="action-btn action-btn--rescan" id="btn-rescan" title="Re-run scan">
+            <span>🔄</span> Rescan
+        </button>
+    </section>
+
+    <!-- ── Footer ────────────────────────────────────────────── -->
+    <footer class="popup-footer">
+        <span class="footer-tag" id="footer-tag">Zero-Trust · Local-Only · No Data Sent</span>
+    </footer>
+
+    <script src="popup.js"></script>
+</body>
+
+</html>

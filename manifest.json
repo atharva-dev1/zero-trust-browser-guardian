@@ -1,0 +1,56 @@
+{
+    "manifest_version": 3,
+    "name": "Zero-Trust Browser Guardian",
+    "short_name": "ZTBG",
+    "version": "1.0.1",
+    "description": "A Zero-Trust security layer for your browser — detects phishing, blocks data leaks, and flags dark patterns in real time.",
+    "icons": {
+        "16": "icons/icon16.png",
+        "48": "icons/icon48.png",
+        "128": "icons/icon128.png"
+    },
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": {
+            "16": "icons/icon16.png",
+            "48": "icons/icon48.png",
+            "128": "icons/icon128.png"
+        },
+        "default_title": "Zero-Trust Browser Guardian"
+    },
+    "background": {
+        "service_worker": "background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "http://*/*",
+                "https://*/*"
+            ],
+            "js": [
+                "detector/entropy.js",
+                "detector/domAnalyzer.js",
+                "detector/phishing.js",
+                "detector/dataleak.js",
+                "content.js"
+            ],
+            "css": [
+                "styles/content.css"
+            ],
+            "run_at": "document_idle",
+            "all_frames": false
+        }
+    ],
+    "permissions": [
+        "activeTab",
+        "storage",
+        "scripting",
+        "clipboardRead"
+    ],
+    "host_permissions": [
+        "<all_urls>"
+    ],
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self'"
+    }
+}

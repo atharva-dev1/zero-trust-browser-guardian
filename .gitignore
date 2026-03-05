@@ -1,0 +1,10 @@
+# Exclude internal audit/changelog files from public repo
+AUDIT_REPORT.md
+CHANGELOG.md
+
+# OS / editor junk
+.DS_Store
+Thumbs.db
+*.log
+.vscode/
+.idea/

