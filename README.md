@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🛡️ Zero-Trust Browser Guardian (ZTBG)
+# 🛡️ Zero-TrustBrowser Guardian (ZTBG)
 
 ### *Your AI Security Agent Inside Every Tab*
 
